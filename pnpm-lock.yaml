@@ -147,6 +147,9 @@ importers:
       jspdf:
         specifier: ^3.0.1
         version: 3.0.4
+      jspdf-autotable:
+        specifier: ^5.0.2
+        version: 5.0.8(jspdf@3.0.4)
       lucide-react:
         specifier: ^0.545.0
         version: 0.545.0(react@19.2.7)
@@ -2099,6 +2102,11 @@ packages:
   jsonpointer@5.0.1:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
     engines: {node: '>=0.10.0'}
+
+  jspdf-autotable@5.0.8:
+    resolution: {integrity: sha512-Hy05N86yBO7CXBrnSLOge7i1ZYpKH2DjQ94iybaP7vBhSInjvRBgDc99ngKzSbSO8Jc98ZCally8I6n0tj2RJQ==}
+    peerDependencies:
+      jspdf: ^2 || ^3 || ^4
 
   jspdf@3.0.4:
     resolution: {integrity: sha512-dc6oQ8y37rRcHn316s4ngz/nOjayLF/FFxBF4V9zamQKRqXxyiH1zagkCdktdWhtoQId5K20xt1lB90XzkB+hQ==}
@@ -4638,6 +4646,10 @@ snapshots:
       graceful-fs: 4.2.11
 
   jsonpointer@5.0.1: {}
+
+  jspdf-autotable@5.0.8(jspdf@3.0.4):
+    dependencies:
+      jspdf: 3.0.4
 
   jspdf@3.0.4:
     dependencies:
