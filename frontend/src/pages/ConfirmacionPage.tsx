@@ -64,7 +64,7 @@ export default function ConfirmacionPage() {
         });
       }
 
-      downloadOrderPDF(order, catalog, discountPct || undefined);
+      await downloadOrderPDF(order, catalog, discountPct || undefined, config);
 
       const waText = encodeURIComponent(
         `Hola, soy ${nombre}. Te comparto mi pre-orden de *${order.product?.name ?? "Dulcera Car"}*.\nCantidad: ${order.quantity?.toLocaleString("es-MX")} piezas.\nTotal estimado: *$${finalTotal.toFixed(2)} MXN*${discountCode ? ` (código *${discountCode}* −${discountPct}%)` : ""}.\nFavor de confirmar. ¡Gracias!`,

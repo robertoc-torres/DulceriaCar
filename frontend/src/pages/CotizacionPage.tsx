@@ -16,6 +16,7 @@ export default function CotizacionPage() {
   const [discountInput, setDiscountInput] = useState("");
   const [appliedCode, setAppliedCode] = useState<{ code: string; pct: number; label: string } | null>(null);
   const [discountError, setDiscountError] = useState("");
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   if (catalogLoading || !catalog) return <LoadingScreen />;
 
@@ -118,10 +119,18 @@ export default function CotizacionPage() {
 
         <button
           type="button"
-          onClick={() => downloadOrderPDF(order, catalog, appliedCode?.pct)}
-          className="w-full flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-xl text-sm font-medium mb-4"
+          disabled={pdfLoading}
+          onClick={async () => {
+            setPdfLoading(true);
+            try {
+              await downloadOrderPDF(order, catalog, appliedCode?.pct, config);
+            } finally {
+              setPdfLoading(false);
+            }
+          }}
+          className="w-full flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-xl text-sm font-medium mb-4 disabled:opacity-50"
         >
-          <Download size={16} /> Descargar PDF
+          <Download size={16} /> {pdfLoading ? "Generando PDF…" : "Descargar PDF"}
         </button>
 
         <p className="text-xs text-gray-400 text-center">
