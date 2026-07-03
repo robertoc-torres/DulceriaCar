@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.19.0",
+    "pnpm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "pnpm --parallel --filter @dulceriacar/backend --filter @dulceriacar/frontend run dev",
     "build": "pnpm -r --filter @dulceriacar/backend --filter @dulceriacar/frontend run build",

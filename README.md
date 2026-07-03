@@ -85,8 +85,10 @@ Health check: `GET /api/healthz`
 
 ### 3. Frontend (`/frontend`)
 
+- **Root directory**: repo root (monorepo) or `/frontend` if configured per-service
+- **Node.js**: 20.19+ required (set via `nixpacks.toml` / `.node-version`)
 - **Build**: `pnpm install && pnpm --filter @dulceriacar/frontend build`
-- **Start**: `npx serve dist -s -l $PORT`
+- **Start**: `pnpm --filter @dulceriacar/frontend exec serve dist -s -l $PORT`
 
 Set `VITE_API_URL` to the backend Railway URL at build time.
 

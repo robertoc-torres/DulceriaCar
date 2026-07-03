@@ -1,6 +1,7 @@
 [build]
 builder = "nixpacks"
+buildCommand = "pnpm install && pnpm --filter @dulceriacar/frontend build"
 
 [deploy]
-startCommand = "npx serve dist -s -l ${PORT:-3000}"
+startCommand = "pnpm --filter @dulceriacar/frontend exec serve dist -s -l ${PORT:-3000}"
 restartPolicyType = "on_failure"
