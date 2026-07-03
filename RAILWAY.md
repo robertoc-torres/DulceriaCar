@@ -1,8 +1,16 @@
 # Railway deployment — DulceriaCar
 
-Railway is still running **Nixpacks/Railpack with Node 18** if you see `stage-0` and `Node.js 18.20.5` in logs. Fix it on the **frontend service** in the Railway dashboard.
+## Automatic fix (no dashboard change required)
 
-## Option A — Dockerfile (recommended)
+The frontend `build` script runs `frontend/scripts/ensure-node22.sh` first. When Railway uses Node 18, it upgrades to Node 22 and reinstalls dependencies before Vite runs. Your existing build command can stay:
+
+```bash
+pnpm --filter @dulceriacar/frontend build
+```
+
+Redeploy after pulling the latest `main`.
+
+## Manual options (recommended long-term)
 
 1. **Settings → Build**
    - **Root Directory**: leave empty (repo root)
