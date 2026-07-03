@@ -85,10 +85,14 @@ Health check: `GET /api/healthz`
 
 ### 3. Frontend (`/frontend`)
 
-- **Root directory**: repo root (monorepo) or `/frontend` if configured per-service
-- **Node.js**: 20.19+ required (set via `nixpacks.toml` / `.node-version`)
-- **Build**: `pnpm install && pnpm --filter @dulceriacar/frontend build`
-- **Start**: `pnpm --filter @dulceriacar/frontend exec serve dist -s -l $PORT`
+Uses **`frontend/Dockerfile`** (Node 22) so the build does not depend on Nixpacks Node 18.
+
+- **Root directory**: repository root (not `/frontend`)
+- **Config file**: `frontend/railway.toml`
+- **Build**: Docker (`frontend/Dockerfile`)
+- **Build-time env**: `VITE_API_URL=https://your-backend.railway.app`
+
+If you must use Nixpacks/Railpack instead of Docker, set `NIXPACKS_NODE_VERSION=22` or ensure `railpack.toml` / `.node-version` is picked up.
 
 Set `VITE_API_URL` to the backend Railway URL at build time.
 
