@@ -1,6 +1,8 @@
 [build]
 builder = "dockerfile"
 dockerfilePath = "frontend/Dockerfile"
+# Fallback if Docker is not used (custom build command in Railway UI):
+#   bash scripts/railway-build-frontend.sh
 
 [deploy]
 restartPolicyType = "on_failure"

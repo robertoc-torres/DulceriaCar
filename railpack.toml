@@ -1,3 +1,0 @@
-# Railpack (Railway default builder) — fallback if Dockerfile is not used.
-[node]
-version = "22"
