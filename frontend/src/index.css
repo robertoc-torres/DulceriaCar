@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #d32f2f;
+  --color-primary-dark: #b71c1c;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #fafafa;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  background: #fff;
+  box-shadow: 0 0 0 1px #eee;
+}
+
+.btn-primary {
+  @apply bg-primary text-white font-semibold rounded-xl px-4 py-3 active:opacity-90 disabled:opacity-50;
+}
+
+.input-field {
+  @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30;
+}
+
+.chip {
+  @apply inline-flex items-center px-3.5 py-2 rounded-lg border text-sm font-medium mr-2 mb-2 cursor-pointer transition-colors;
+}
+
+.chip-selected {
+  @apply bg-primary text-white border-primary;
+}
+
+.chip-default {
+  @apply bg-gray-50 text-gray-800 border-gray-200 hover:border-gray-300;
+}
