@@ -57,9 +57,27 @@ Then **remove** the manual build command `pnpm --filter @dulceriacar/frontend bu
 
 ## Backend service
 
-- **Railway config file**: `/backend/railway.toml`
-- **Root Directory**: empty
-- Variables: `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CORS_ORIGIN`
+Uses **`backend/Dockerfile`** (builds `backend/dist/index.mjs`, runs migrations + seed on start).
+
+1. **Settings → Build**
+   - **Root Directory**: empty (repo root)
+   - **Railway config file**: `/backend/railway.toml`
+   - **Builder**: Dockerfile
+   - **Dockerfile path**: `backend/Dockerfile`
+   - **Build Command**: **empty**
+   - **Start Command**: **empty** (defined in Dockerfile)
+
+2. **Variables** (required):
+   - `DATABASE_URL` — from Railway Postgres
+   - `SESSION_SECRET` — random string
+   - `ADMIN_EMAIL` / `ADMIN_PASSWORD` — initial admin seed
+   - `CORS_ORIGIN` — frontend URL (e.g. `https://your-frontend.up.railway.app`)
+   - `NODE_ENV=production`
+
+3. **Nixpacks fallback** (if not using Docker):
+   - Build: `pnpm install --frozen-lockfile && pnpm --filter @dulceriacar/backend build`
+   - Start: `bash scripts/railway-start-backend.sh`
+   - Do **not** use `node dist/index.mjs` from repo root — dist is at `backend/dist/`.
 
 ## Verify success
 

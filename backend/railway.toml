@@ -1,8 +1,11 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
+dockerfilePath = "backend/Dockerfile"
+# Nixpacks fallback (if Docker is not used):
+#   buildCommand = "pnpm install --frozen-lockfile && pnpm --filter @dulceriacar/backend build"
+#   startCommand = "bash scripts/railway-start-backend.sh"
 
 [deploy]
-startCommand = "node --enable-source-maps dist/index.mjs"
 healthcheckPath = "/api/healthz"
 healthcheckTimeout = 120
 restartPolicyType = "on_failure"
