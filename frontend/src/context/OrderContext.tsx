@@ -13,6 +13,7 @@ interface OrderContextValue {
   order: OrderState;
   catalog: CatalogData | undefined;
   catalogLoading: boolean;
+  catalogError: Error | null;
   setProduct: (product: Product) => void;
   setConfig: (
     size: string,
@@ -45,7 +46,7 @@ interface OrderContextValue {
 const OrderContext = createContext<OrderContextValue | null>(null);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
-  const { data: catalog, isLoading: catalogLoading } = useQuery({
+  const { data: catalog, isLoading: catalogLoading, error: catalogError } = useQuery({
     queryKey: ["catalog"],
     queryFn: getCatalog,
   });
@@ -70,6 +71,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     order,
     catalog,
     catalogLoading,
+    catalogError: catalogError as Error | null,
     setProduct: (product) => {
       if (!catalog) return;
       setOrder((prev) => setProductOnOrder(prev, product, catalog));
@@ -89,7 +91,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     },
     getUnitPrice: () => (catalog ? getUnitPrice(order, catalog) : 0),
     getTotal: () => (catalog ? getTotal(order, catalog) : 0),
-  }), [order, catalog, catalogLoading]);
+  }), [order, catalog, catalogLoading, catalogError]);
 
   return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>;
 }

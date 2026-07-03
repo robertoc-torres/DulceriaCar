@@ -1,10 +1,19 @@
 const API_BASE = import.meta.env.VITE_API_URL ?? "";
 
+function missingApiUrlMessage(): string {
+  return "VITE_API_URL no está configurada. En Railway, agrega esta variable al servicio frontend y vuelve a desplegar.";
+}
+
 export async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  if (import.meta.env.PROD && !API_BASE) {
+    throw new Error(missingApiUrlMessage());
+  }
+
+  const url = `${API_BASE}${path}`;
+  const res = await fetch(url, {
     ...options,
     credentials: "include",
     headers: {
@@ -13,9 +22,17 @@ export async function apiFetch<T>(
     },
   });
 
+  const contentType = res.headers.get("content-type") ?? "";
+
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error((body as { error?: string }).error ?? `Request failed: ${res.status}`);
+    throw new Error((body as { error?: string }).error ?? `Request failed: ${res.status} (${url})`);
+  }
+
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      `El API no respondió JSON en ${url}. ¿VITE_API_URL apunta al backend? ¿El backend está en línea?`,
+    );
   }
 
   return res.json() as Promise<T>;

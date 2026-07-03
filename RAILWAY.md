@@ -20,10 +20,13 @@ Redeploy after pulling the latest `main`.
    - **Build Command**: **delete / leave empty**
    - **Start Command**: **delete / leave empty**
 
-2. **Variables**
-   - `VITE_API_URL` = your backend URL (required at build time)
+2. **Variables** (required at **build time** — redeploy after changing):
+   - `VITE_API_URL` = public URL of your **backend** service (e.g. `https://dulceriacarbackend-production.up.railway.app`)
+   - No trailing slash.
 
 3. **Redeploy** with **Clear build cache**
+
+Without `VITE_API_URL`, the SPA calls `/api/...` on the frontend domain and stays on "Cargando…".
 
 ## Option B — Keep custom build command (works on Node 18 images)
 

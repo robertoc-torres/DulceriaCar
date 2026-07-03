@@ -4,7 +4,7 @@ import { Clock, Edit3, CheckCircle, Gift, Tag, ChevronRight, History, Phone, Fil
 import { getPublicConfig } from "@/lib/api";
 import { useOrder } from "@/context/OrderContext";
 import { useSavedOrders } from "@/hooks/useSavedOrders";
-import { LoadingScreen } from "@/components/ui";
+import { LoadingScreen, ErrorScreen } from "@/components/ui";
 import type { ProductId } from "@/lib/pricing";
 
 const GALLERY = [
@@ -29,12 +29,23 @@ const STEPS = [
 ];
 
 export default function HomePage() {
-  const { catalog, catalogLoading, setProduct } = useOrder();
+  const { catalog, catalogLoading, catalogError, setProduct } = useOrder();
   const { orders } = useSavedOrders();
   const { data: config } = useQuery({ queryKey: ["publicConfig"], queryFn: getPublicConfig });
   const [, setLocation] = useLocation();
 
-  if (catalogLoading || !catalog) return <LoadingScreen />;
+  if (catalogLoading) return <LoadingScreen />;
+
+  if (catalogError || !catalog) {
+    return (
+      <ErrorScreen
+        message={
+          catalogError?.message ??
+          "No se pudo cargar el catálogo. Verifica que el backend esté en línea y que VITE_API_URL esté configurada."
+        }
+      />
+    );
+  }
 
   const heroTitle = (config?.["business.hero_title"] as string) ?? "Haz que tu Marca\nsea el Regalo\nmás Dulce";
 
